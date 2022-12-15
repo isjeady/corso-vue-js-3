@@ -14,87 +14,74 @@
 </style>
 </head>
 <body>
-    <h1>Start con Vue Js</h1>
-    <div id="applicazione">
-         <img 
-            width="50"
-            src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
-        />
-        <br><br>
-        {{ hasError }}
-        <br><br>
-        <input 
-            :style="{ 'border-color': hasError ? 'red' : ''}"
-            :class="{ danger : hasError}"
-            @keyup.enter="handleClickExt" 
-        />
-        <br><br>
-        <input 
-            :class="{ danger : hasError}"
-            @keyup.enter="handleClickExt" 
-        />
-        <br><br>
-        <input 
-            :class="styleObject"
-            @keyup.enter="handleClickExt" 
-        />
-        <br><br>
-        <p v-if="hasError" class="danger">Errore</p>
+    <h4>Start con Vue Js</h4>
+    <button id="remove">Remove Unmount</button>
+    <hr>
 
-        <div @click="handleClickExt" >
-            Click Ext
-            <button @click.stop="handleClickInt">
-                Click Int
-            </button>
-            .stop
-            .prevent
-            .self
-            .capture
-            .once
-            .passive
-        </div>
-        <hr>
-        <ul>
-            <li>createApp, setup</li>
-            <li>return data, ref</li>
-            <li>v-on:click, @click, Event</li>
-            <li>watch</li>
-            <li>v-if, v-show</li>
-            <li>v-bind, v-once</li>
-            <li>v-model, computed, template</li>
-            <li>v-for, v-key</li>
-        </ul>
+    <div id="applicazione">
+        {{error}}
+        <p v-if="error" class="danger">Errore</p>
+        <p></p>
+        <button @click="handleClickExt">
+            RESET
+        </button>
     </div>
 </body>
 
 <script>
-    const { createApp, ref, watch, computed,reactive } = Vue
+    const { 
+        createApp,
+        ref, 
+        onBeforeMount,
+        onMounted,
+        onUpdated,
+        onBeforeUnmount,
+        onUnmounted 
+    } = Vue
 
-    createApp({
+    const myApp = createApp({
       setup() {
-        const hasError = ref(false);
-        const styleObject = reactive({
-            danger : hasError
-        })
+        const error = ref(false);
 
         const handleClickExt = () => {
-            //alert("Click ESTERNO")
-            hasError.value = true;
+            error.value = !error.value;
         }
-        const handleClickInt = (e) => {
-            // e.stopPropagation();
-            //alert("Click INTERNO")
-            hasError.value = false;
-        }
+
+        onBeforeMount(() => {
+            console.log("onBeforeMount")
+        })
+        
+        onMounted(() => {
+            console.log("onMounted")
+        })
+
+        onUpdated(() => {
+            console.log("onUpdated")
+        })
+
+        onBeforeUnmount(() => {
+            console.log("onBeforeUnmount")
+        })
+
+        onUnmounted(() => {
+            console.log("onUnmounted")
+        })
+
 
         return {
             handleClickExt,
-            handleClickInt,
-            hasError,
-            styleObject
+            error,
         }
       }
-    }).mount('#applicazione')
+    })
+    
+    myApp.mount('#applicazione')
+
+    const removeComponent = () => {
+        myApp.unmount();
+    }
+
+    document.getElementById('remove').addEventListener('click',removeComponent);
 </script>
 
 </html>
