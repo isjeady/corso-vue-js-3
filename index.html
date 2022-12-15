@@ -6,73 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
 </head>
-
 <body>
-    <div id="app">
-        {{ message }} | {{ edit }}
-        <button v-if="edit" @click="handleChangeReset">Reset</button>
+    <h1>Start con Vue Js</h1>
+    <div id="applicazione">
+
+        <template v-if="!vueOrReact">
+            <img 
+                width="50"
+                src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
+            />
+        </template>
+        <template v-else>
+            <img 
+                width="50"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+            />
+        </template>
+        
+       
+
+        <br>
+        <br>
+        Nome Completo : {{ fullName }} 
+        <br>
+        Nome:
+        <input 
+            type="text" 
+            v-model="firstName"
+        >
+        <br> <br>
+        Cognome:
+        <input 
+            type="text" 
+            v-model="lastName"
+        >
+        <br>
+        <br>
+        Vue Js o React?
+        <input 
+            type="checkbox" 
+            v-model="vueOrReact"
+        >
+
         <br><br>
-        <button @click="handleChangeA">Change Status A</button>
-        <br><br>
-        <button @click="handleChangeB">Change Status B</button>
+        <button @click="handleChange" >Change</button>
+        <hr>
+        <ul>
+            <li>createApp, setup</li>
+            <li>return data, ref</li>
+            <li>v-on:click, @click, Event</li>
+            <li>watch</li>
+            <li>v-if, v-show</li>
+            <li>v-bind, v-once</li>
+            <li>v-model, computed, template</li>
+        </ul>
     </div>
 </body>
 
 <script>
-    const { createApp, ref, watch } = Vue
-  
+    const { createApp, ref, watch, computed } = Vue
+
     createApp({
-      /* data() {
-        return {
-          message: 'Hello Vue!'
-        }
-      },
-      methods: {
-        handleChange(){
-            // alert("Change")
-            this.message = "Change Vue!"
-        }
-      }, */
       setup() {
-        //const message = "Hello Vue!"
-        const defaultMessage = "Inizio!";
-        const message = ref(defaultMessage);
-        const edit = ref(false);
-        
-        const handleChangeA = () => {
-            // alert("Change")
-            //this.message = "Change Vue!"
-            message.value = "Change Message AAA!"
-        };
+          const img = ref("")
+          // https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg
+          // https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg
+          const firstName = ref("")
+          const lastName = ref("")
+          const vueOrReact = ref(false);
 
-        const handleChangeB = () => {
-            message.value = "Change Message BBB!"
-        };
+        const handleChange =  (e,param) => {
+            message.value = "Change Status to A";
+        }
 
-        const handleChangeReset = () => {
-            edit.value = false;
-            message.value = defaultMessage
-        };
-
-        watch(message, (message, prevMessage) => {
-            console.log(prevMessage)
-            if(message != defaultMessage){
-                edit.value = true;
-            }
-            console.log(message)
+        const fullName = computed(() => {
+            return firstName.value + ' ' + lastName.value
         })
 
+        /* const setFirstName = (event) => {
+            firstName.value = event.target.value;
+        } */
 
         return {
-            message,
-            edit,
-            handleChangeA,
-            handleChangeB,
-            handleChangeReset
+            vueOrReact,
+            handleChange,
+            img,
+            firstName,
+            lastName,
+            fullName
         }
       }
-    }).mount('#app')
-  </script>
+    }).mount('#applicazione')
+</script>
+
 </html>
