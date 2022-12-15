@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ message }} | {{ edit }}
+        <button v-if="edit" @click="handleChangeReset">Reset</button>
+        <br><br>
+        <button @click="handleChangeA">Change Status A</button>
+        <br><br>
+        <button @click="handleChangeB">Change Status B</button>
+    </div>
+</body>
+
+<script>
+    const { createApp, ref, watch } = Vue
+  
+    createApp({
+      /* data() {
+        return {
+          message: 'Hello Vue!'
+        }
+      },
+      methods: {
+        handleChange(){
+            // alert("Change")
+            this.message = "Change Vue!"
+        }
+      }, */
+      setup() {
+        //const message = "Hello Vue!"
+        const defaultMessage = "Inizio!";
+        const message = ref(defaultMessage);
+        const edit = ref(false);
+        
+        const handleChangeA = () => {
+            // alert("Change")
+            //this.message = "Change Vue!"
+            message.value = "Change Message AAA!"
+        };
+
+        const handleChangeB = () => {
+            message.value = "Change Message BBB!"
+        };
+
+        const handleChangeReset = () => {
+            edit.value = false;
+            message.value = defaultMessage
+        };
+
+        watch(message, (message, prevMessage) => {
+            console.log(prevMessage)
+            if(message != defaultMessage){
+                edit.value = true;
+            }
+            console.log(message)
+        })
+
+
+        return {
+            message,
+            edit,
+            handleChangeA,
+            handleChangeB,
+            handleChangeReset
+        }
+      }
+    }).mount('#app')
+  </script>
+</html>
