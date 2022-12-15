@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+    .danger {
+        border-color: red;
+        color: red;
+    }
+</style>
 </head>
 <body>
     <h1>Start con Vue Js</h1>
@@ -15,26 +21,38 @@
             src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
         />
         <br><br>
-
-        <ul>
-            <li v-for="({ title,content,id }, idx) in items" :key="id">
-                {{ idx+1 }}: {{ title }}
-                <p style="font-size: 10px;">
-                    {{ content }}
-                </p>
-            </li>
-        </ul>
-
-        <span v-for="n in 8">{{ n }} | </span>
-
-        <ul>
-            <li v-for="(value, key) in myObj" :key="key">
-                {{ key }} : {{ value }}
-            </li>
-        </ul>
-
+        {{ hasError }}
         <br><br>
-        <button @click="handleChange" >Change</button>
+        <input 
+            :style="{ 'border-color': hasError ? 'red' : ''}"
+            :class="{ danger : hasError}"
+            @keyup.enter="handleClickExt" 
+        />
+        <br><br>
+        <input 
+            :class="{ danger : hasError}"
+            @keyup.enter="handleClickExt" 
+        />
+        <br><br>
+        <input 
+            :class="styleObject"
+            @keyup.enter="handleClickExt" 
+        />
+        <br><br>
+        <p v-if="hasError" class="danger">Errore</p>
+
+        <div @click="handleClickExt" >
+            Click Ext
+            <button @click.stop="handleClickInt">
+                Click Int
+            </button>
+            .stop
+            .prevent
+            .self
+            .capture
+            .once
+            .passive
+        </div>
         <hr>
         <ul>
             <li>createApp, setup</li>
@@ -54,38 +72,26 @@
 
     createApp({
       setup() {
-        const myObj = reactive({
-            id : 232,
-            title : "Titolo del Post 1",
-            content : "Descrizione del post 1",
-            link : "https://mysite.com/232"
+        const hasError = ref(false);
+        const styleObject = reactive({
+            danger : hasError
         })
-        const items = ref([
-            {
-                id : 1,
-                title : "Titolo del Post 1",
-                content : "Descrizione del post 1"
-            },
-            {
-                id : 2,
-                title : "Titolo del Post 2 ",
-                content : "Descrizione del post 2 "
-            },
-            {
-                id : 3,
-                title : "Titolo del Post 3",
-                content : "Descrizione del post 3 "
-            },
-            {
-                id : 4,
-                title : "Titolo del Post 4 ",
-                content : "Descrizione del post 4"
-            }
-        ])
+
+        const handleClickExt = () => {
+            //alert("Click ESTERNO")
+            hasError.value = true;
+        }
+        const handleClickInt = (e) => {
+            // e.stopPropagation();
+            //alert("Click INTERNO")
+            hasError.value = false;
+        }
 
         return {
-            items,
-            myObj
+            handleClickExt,
+            handleClickInt,
+            hasError,
+            styleObject
         }
       }
     }).mount('#applicazione')
