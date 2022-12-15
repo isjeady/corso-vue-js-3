@@ -10,44 +10,28 @@
 <body>
     <h1>Start con Vue Js</h1>
     <div id="applicazione">
+         <img 
+            width="50"
+            src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
+        />
+        <br><br>
 
-        <template v-if="!vueOrReact">
-            <img 
-                width="50"
-                src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
-            />
-        </template>
-        <template v-else>
-            <img 
-                width="50"
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
-            />
-        </template>
-        
-       
+        <ul>
+            <li v-for="({ title,content,id }, idx) in items" :key="id">
+                {{ idx+1 }}: {{ title }}
+                <p style="font-size: 10px;">
+                    {{ content }}
+                </p>
+            </li>
+        </ul>
 
-        <br>
-        <br>
-        Nome Completo : {{ fullName }} 
-        <br>
-        Nome:
-        <input 
-            type="text" 
-            v-model="firstName"
-        >
-        <br> <br>
-        Cognome:
-        <input 
-            type="text" 
-            v-model="lastName"
-        >
-        <br>
-        <br>
-        Vue Js o React?
-        <input 
-            type="checkbox" 
-            v-model="vueOrReact"
-        >
+        <span v-for="n in 8">{{ n }} | </span>
+
+        <ul>
+            <li v-for="(value, key) in myObj" :key="key">
+                {{ key }} : {{ value }}
+            </li>
+        </ul>
 
         <br><br>
         <button @click="handleChange" >Change</button>
@@ -60,41 +44,48 @@
             <li>v-if, v-show</li>
             <li>v-bind, v-once</li>
             <li>v-model, computed, template</li>
+            <li>v-for, v-key</li>
         </ul>
     </div>
 </body>
 
 <script>
-    const { createApp, ref, watch, computed } = Vue
+    const { createApp, ref, watch, computed,reactive } = Vue
 
     createApp({
       setup() {
-          const img = ref("")
-          // https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg
-          // https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg
-          const firstName = ref("")
-          const lastName = ref("")
-          const vueOrReact = ref(false);
-
-        const handleChange =  (e,param) => {
-            message.value = "Change Status to A";
-        }
-
-        const fullName = computed(() => {
-            return firstName.value + ' ' + lastName.value
+        const myObj = reactive({
+            id : 232,
+            title : "Titolo del Post 1",
+            content : "Descrizione del post 1",
+            link : "https://mysite.com/232"
         })
-
-        /* const setFirstName = (event) => {
-            firstName.value = event.target.value;
-        } */
+        const items = ref([
+            {
+                id : 1,
+                title : "Titolo del Post 1",
+                content : "Descrizione del post 1"
+            },
+            {
+                id : 2,
+                title : "Titolo del Post 2 ",
+                content : "Descrizione del post 2 "
+            },
+            {
+                id : 3,
+                title : "Titolo del Post 3",
+                content : "Descrizione del post 3 "
+            },
+            {
+                id : 4,
+                title : "Titolo del Post 4 ",
+                content : "Descrizione del post 4"
+            }
+        ])
 
         return {
-            vueOrReact,
-            handleChange,
-            img,
-            firstName,
-            lastName,
-            fullName
+            items,
+            myObj
         }
       }
     }).mount('#applicazione')
