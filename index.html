@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 3</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+      />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js" defer></script>
+    <style type="text/tailwindcss">
+        button {
+            @apply p-4 rounded-md text-base font-bold text-white;
+        }
+        .attack {
+            @apply bg-blue-600 hover:bg-blue-700;
+        }
+        .medikit {
+            @apply bg-red-500 hover:bg-red-700;
+        }
+        .header {
+            @apply bg-green-400 text-center p-4 text-xl font-bold mb-20;
+        }
+        .healthbar {
+            @apply rounded-md border border-gray-500 w-full h-6;
+        }
+        .healthbar__value {
+            @apply h-full w-full bg-red-400 hover:bg-red-600;
+        }
+        .container {
+            @apply text-center p-4 m-4 shadow-xl rounded-md font-bold max-w-xl mx-auto;
+        }
+        :disabled {
+            @apply bg-gray-400 hover:bg-gray-400 cursor-not-allowed;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="game">
+      <div class="header">
+        <h1>Game | Round: {{ round }}</h1>
+      </div>
+      <section class="container" v-if="winner">
+        <div class="text-3xl">Game Over!</div>
+        <div v-if="winner === 'enemy'">You lost!</div>
+        <div v-else-if="winner === 'player'">You won!</div>
+        <div v-else>It's a draw!</div>
+        <button 
+            class="attack" 
+            @click="newGame"
+        >
+            Nuovo Gioco
+        </button>
+      </section>
+      <div class="my-24">
+        <section id="enemy" class="container">
+            <h2>Nemico ({{enemyHealth}})</h2>
+            <div class="healthbar">
+              <div class="healthbar__value" :style="enemyBarStyles"></div>
+            </div>
+          </section>
+          <section id="player" class="container">
+            <h2>Tu ({{playerHealth}})</h2>
+            <div class="healthbar">
+              <div class="healthbar__value" :style="playerBarStyles"></div>
+            </div>
+          </section>
+      </div>
+      <section id="controls" class="grid grid-cols-2 max-w-xl mx-auto gap-8 my-10" v-if="!winner">
+        <button 
+            class="attack" 
+            @click="attackEnemy"
+        >
+            Attacco
+        </button>
+        <button 
+            class="attack" 
+            @click="attackEnemySpecial"
+            :disabled="attackEnemySpecialDisabled"
+        >
+            Attacco Speciale
+        </button>
+        <button class="medikit" :disabled="medikitDisabled" @click="medikitPlayer">Medikit</button>
+        <button class="medikit" @click="gameover">Mi Arrendo!</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log | {{logMessages.length}} azioni</h2>
+        <ul class="list-disc text-left mx-8" >
+            <li v-for="logMessage in logMessages" class="py-2">
+                <span
+                  :class="{
+                    'bg-blue-500 p-2 rounded-xl': logMessage.actionBy === 'player', 
+                    'bg-yellow-500 p-2 rounded-xl': logMessage.actionBy === 'enemy'
+                  }"
+                >
+                  {{ logMessage.actionBy === 'player' ? 'Player' : 'Enemy'}}
+                </span>
+                <span v-if="logMessage.actionType === 'medikit'">
+                  usa il medikit con 
+                  <span class="bg-green-500 p-2 rounded-xl">{{ logMessage.actionValue }} punti </span></span
+                >
+                <span v-else>
+                  attacca con 
+                  <span class="bg-red-300 p-2 rounded-xl">{{ logMessage.actionValue }} punti</span>
+                </span>
+              </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
