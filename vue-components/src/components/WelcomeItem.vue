@@ -1,3 +1,9 @@
+<script setup>
+import UiButton from './UiButton.vue';
+</script>
+
+
+
 <template>
   <div class="item">
     <i>
