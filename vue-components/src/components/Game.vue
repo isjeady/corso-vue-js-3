@@ -14,8 +14,17 @@
       v-if="!winner"
     >
       <UiButtonComponent title="Attacco" @click="attackEnemy" />
-      <UiButtonComponent title="Attacco Speciale" @click="attackEnemySpecial" />
-      <UiButtonComponent type="danger" title="Medikit" @click="medikitPlayer" />
+      <UiButtonComponent
+        title="Attacco Speciale"
+        @click="attackEnemySpecial"
+        :disabled="attackEnemySpecialDisabled"
+      />
+      <UiButtonComponent
+        type="danger"
+        title="Medikit"
+        @click="medikitPlayer"
+        :disabled="medikitDisabled"
+      />
       <UiButtonComponent type="danger" title="Mi Arrendo!" @click="gameover" />
     </section>
     <BattleLogComponent />
@@ -46,6 +55,14 @@ export default {
     const round = ref(0);
     const winner = ref(null);
     const logMessages = ref([]);
+
+    const newGame = () => {
+      playerHealth.value = 100;
+      enemyHealth.value = 100;
+      round.value = 0;
+      winner.value = null;
+      logMessages.value = [];
+    };
 
     const generateRandomValue = (min, max) => {
       return Math.floor(Math.random() * (max - min)) + min;
@@ -102,6 +119,30 @@ export default {
       playerHealth.value = 0;
     };
 
+    const attackEnemySpecialDisabled = computed(() => {
+      return round.value % 3 !== 0;
+    });
+
+    const medikitDisabled = computed(() => {
+      return playerHealth.value >= 50 || round.value % 3 !== 0;
+    });
+
+    watch(enemyHealth, (enemyHealth, prevEnemyHealth) => {
+      if (enemyHealth <= 0 && playerHealth.value <= 0) {
+        winner.value = "draw"; // A draw
+      } else if (enemyHealth <= 0) {
+        winner.value = "player"; // Enemy lost
+      }
+    });
+
+    watch(playerHealth, (playerHealth, prevPlayerHealth) => {
+      if (playerHealth <= 0 && enemyHealth.value <= 0) {
+        winner.value = "draw"; // A draw
+      } else if (playerHealth <= 0) {
+        winner.value = "enemy"; // Player lost
+      }
+    });
+
     return {
       round,
       playerHealth,
@@ -110,6 +151,8 @@ export default {
       attackEnemy,
       attackEnemySpecial,
       medikitPlayer,
+      attackEnemySpecialDisabled,
+      medikitDisabled,
     };
   },
 };
