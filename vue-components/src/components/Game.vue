@@ -3,7 +3,10 @@
     <HeaderComponent round="4" />
     <GameOverComponent round="4" />
 
-    <HealthBarComponent />
+    <div class="my-24">
+      <HealthBarComponent title="Tu" health="10" />
+      <HealthBarComponent title="Nemico" health="50" />
+    </div>
 
     <section
       id="controls"
