@@ -27,17 +27,18 @@
       />
       <UiButtonComponent type="danger" title="Mi Arrendo!" @click="gameover" />
     </section>
-    <BattleLogComponent />
+
+    <BattleLogComponent :logMessages="logMessages" />
   </div>
 </template>
-<!-- eslint-disable no-unused-vars -->
+
 <script>
 import HeaderComponent from "./Header.vue";
 import UiButtonComponent from "./UiButton.vue";
 import GameOverComponent from "./GameOver.vue";
 import HealthBarComponent from "./HealthBar.vue";
 import BattleLogComponent from "./BattleLog.vue";
-import { createApp, ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 
 export default {
   components: {
@@ -68,6 +69,14 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     };
 
+    const addLogMessage = (who, what, value) => {
+      logMessages.value.unshift({
+        actionBy: who,
+        actionType: what,
+        actionValue: value,
+      });
+    };
+
     const attackPlayer = () => {
       const attackValue = generateRandomValue(8, 15);
       if (playerHealth.value - attackValue <= 0) {
@@ -75,7 +84,7 @@ export default {
       } else {
         playerHealth.value -= attackValue;
       }
-      // addLogMessage("enemy", "attack", attackValue);
+      addLogMessage("enemy", "attack", attackValue);
     };
 
     const attackEnemy = () => {
@@ -98,7 +107,7 @@ export default {
       } else {
         enemyHealth.value -= attackValue;
       }
-      // addLogMessage("player", "attack", attackValue);
+      addLogMessage("player", "attack", attackValue);
       attackPlayer();
     };
 
@@ -110,7 +119,7 @@ export default {
       } else {
         playerHealth.value += healValue;
       }
-      // addLogMessage("player", "medikit", healValue);
+      addLogMessage("player", "medikit", healValue);
       attackPlayer();
     };
 
@@ -155,6 +164,7 @@ export default {
       medikitDisabled,
       winner,
       newGame,
+      logMessages,
     };
   },
 };
