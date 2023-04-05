@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComponent :round="round" />
-    <GameOverComponent />
+    <GameOverComponent v-if="winner" @click="newGame" />
 
     <div class="my-24">
       <HealthBarComponent title="Tu" :health="playerHealth" />
@@ -153,6 +153,8 @@ export default {
       medikitPlayer,
       attackEnemySpecialDisabled,
       medikitDisabled,
+      winner,
+      newGame,
     };
   },
 };
