@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <button :class="classes" @click="handleClick">
-      {{ title }}
-    </button>
-  </div>
+  <button :class="classes" @click="handleClick" :disabled="disabled">
+    {{ title }}
+  </button>
 </template>
 
 <script>
@@ -16,41 +14,45 @@ export default {
       required: true,
       default: "Titolo...",
     },
-    color: {
+    type: {
       type: String,
       required: false,
       validator(value) {
-        return ["success", "danger"].includes(value);
+        return ["danger"].includes(value);
       },
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+    },
   },
-  emits: ["evt-click"],
+  emits: ["click"],
   setup(props, ctx) {
     const internalTitle = ref(props.title);
 
     internalTitle.value = "";
 
     const classes = ref("");
-    const classBase = "font-bold py-2 px-4 rounded ";
+    const classBase = "btn";
 
     const handleClick = () => {
-      ctx.emit("evt-click");
+      ctx.emit("click");
     };
 
     onMounted(() => {
-      switch (props.color) {
+      let classType = "";
+      switch (props.type) {
         case "success":
-          classes.value =
-            classBase + " bg-green-500 hover:bg-green-700 text-white";
+          classType = "btn-success";
           break;
         case "danger":
-          classes.value = classBase + " bg-red-500 hover:bg-red-700 text-white";
+          classType = "btn-danger";
           break;
         default:
-          classes.value =
-            classBase + " bg-blue-500 hover:bg-blue-700 text-white";
+          classType = "btn-default";
           break;
       }
+      classes.value = `${classBase} ${classType}`;
     });
 
     return {
@@ -60,3 +62,21 @@ export default {
   },
 };
 </script>
+
+<style type="css">
+.btn {
+  @apply p-4 rounded-md text-base font-bold text-white;
+}
+.btn-default {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700;
+}
+.btn-danger {
+  @apply bg-red-500 hover:bg-red-700;
+}
+:disabled {
+  @apply bg-gray-400 hover:bg-gray-400 cursor-not-allowed;
+}
+</style>

@@ -3,21 +3,10 @@
 @tailwind utilities;
 
 
-button {
-    @apply p-4 rounded-md text-base font-bold text-white;
-}
-.attack {
-    @apply bg-blue-600 hover:bg-blue-700;
-}
-.medikit {
-    @apply bg-red-500 hover:bg-red-700;
-}
+
 .header {
     @apply bg-green-400 text-center p-4 text-xl font-bold mb-20;
 }
 .container {
     @apply text-center p-4 m-4 shadow-xl rounded-md font-bold max-w-xl mx-auto;
-}
-:disabled {
-    @apply bg-gray-400 hover:bg-gray-400 cursor-not-allowed;
 }
