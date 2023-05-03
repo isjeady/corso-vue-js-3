@@ -10,6 +10,8 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "pinia": "^2.0.35",
+    "primeicons": "^6.0.1",
     "vue": "^3.2.47"
   },
   "devDependencies": {

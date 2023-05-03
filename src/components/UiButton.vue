@@ -65,7 +65,7 @@ export default {
 
 <style type="css">
 .btn {
-  @apply p-4 rounded-md text-base font-bold text-white;
+  @apply p-2 rounded-md text-base font-bold text-white;
 }
 
 .btn-default {
