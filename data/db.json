@@ -2,33 +2,28 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Task 1",
-      "favourite": false
-    },
-    {
-      "id": 2,
-      "title": "Task 2",
+      "title": "Creare un blog o un sito web su un argomento che ti appassiona, come il cibo, la moda o i viaggi.",
       "favourite": true
     },
     {
-      "title": "Task 3",
+      "id": 2,
+      "title": "Disegnare o dipingere un ritratto di un membro della tua famiglia o un amico.",
+      "favourite": false
+    },
+    {
+      "title": "Cucinare un piatto che non hai mai preparato prima, seguendo una ricetta completamente nuova.",
       "favourite": true,
       "id": 3
     },
     {
-      "title": "Task 4",
-      "favourite": true,
+      "title": "Organizzare un picnic per la tua famiglia o i tuoi amici.",
+      "favourite": false,
       "id": 4
     },
     {
-      "title": "Test add",
-      "favourite": true,
+      "title": "Piantare un giardino in miniatura in un vaso o una scatola, usando piante grasse o fiori colorati.",
+      "favourite": false,
       "id": 154142
-    },
-    {
-      "id": 81498,
-      "title": "test",
-      "favourite": false
     }
   ]
 }
