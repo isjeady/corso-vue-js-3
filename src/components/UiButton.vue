@@ -18,7 +18,7 @@ export default {
       type: String,
       required: false,
       validator(value) {
-        return ["danger"].includes(value);
+        return ["success", "danger"].includes(value);
       },
     },
     disabled: {
@@ -67,15 +67,19 @@ export default {
 .btn {
   @apply p-4 rounded-md text-base font-bold text-white;
 }
+
 .btn-default {
   @apply bg-blue-600 hover:bg-blue-700;
 }
+
 .btn-success {
   @apply bg-green-600 hover:bg-green-700;
 }
+
 .btn-danger {
   @apply bg-red-500 hover:bg-red-700;
 }
+
 :disabled {
   @apply bg-gray-400 hover:bg-gray-400 cursor-not-allowed;
 }
