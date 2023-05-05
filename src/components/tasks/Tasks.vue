@@ -35,9 +35,9 @@ export default {
 
     const {tasks,totalCount,favCount,favs,loading} = storeToRefs(taskStore);
 
-    onMounted(() => {
+ /*    onMounted(() => {
       taskStore.getTasks()
-    })
+    }) */
 
     return {
         tasks,
