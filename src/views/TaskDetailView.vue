@@ -59,15 +59,15 @@ export default {
             // router.back();
             router.push({ name : 'home'})
         }
-
         
         watch(
             () => route.params.taskId,
             async newId => {
-                getTask(newId)
+                if(newId){
+                    getTask(newId)
+                }
             }
-        ) 
-        
+        )
 
         return {
             task,

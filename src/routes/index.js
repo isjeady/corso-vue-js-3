@@ -15,7 +15,6 @@ const TaskDetailGalleryView = () =>
   import("../views/TaskDetailGalleryView.vue");
 const NotFoundView = () => import("../views/NotFoundView.vue");
 
-
 export const routes = [
   { path: "/", component: HomeView, name: "home" },
   { path: "/tasks", component: TasksView, name: "tasks" },
