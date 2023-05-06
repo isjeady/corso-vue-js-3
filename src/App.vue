@@ -7,7 +7,7 @@
         <img src="https://router.vuejs.org/logo.svg" alt="pinia logo" width="70">
       </div>
       <p class="text-xl text-center mt-4 font-bold">
-        Pinia - Store Manager & Vue Router 
+        Pinia - Store Manager & Vue Router | Edit
       </p>
       <a class="text-xs underline mb-4" href="https://www.isjeady.com" target="_blank">isjeady.com</a>
      <!--  <task-form v-if="!loading" /> -->
